@@ -1,0 +1,159 @@
+﻿<!doctype html>
+<html lang="en">
+<head>
+    <title>Edgewater Medical Center</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link href="~/Content/images/favicon.ico" rel="icon">
+    <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,900" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Chilanka|Coming+Soon|Pangolin|Special+Elite&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Work+Sans&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Mada&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="~/Content/css/bootstrap.css">
+    <link rel="stylesheet" href="~/Content/css/animate.css">
+    <link rel="stylesheet" href="~/Content/css/owl.carousel.min.css">
+    <link rel="stylesheet" href="~/Content/fonts/ionicons/css/ionicons.min.css">
+    <link rel="stylesheet" href="~/Content/fonts/fontawesome/css/font-awesome.min.css">
+    <link rel="stylesheet" href="~/Content/fonts/flaticon/font/flaticon.css">
+    <!-- Theme Style -->
+    <link rel="stylesheet" href="~/Content/css/style.css">
+
+    <link href="https://fonts.googleapis.com/css?family=Inconsolata" rel="stylesheet">
+
+
+    @Styles.Render("~/Content/css")
+    @RenderSection("htmlHead", required: false)
+</head>
+<body>
+    <header role="banner">
+        <nav class="navbar navbar-expand-md navbar-dark bg-light">
+            <div class="container">
+                <a class="navbar-brand absolute" href="@Url.Action("Index", "Home")">Edgewater Medical Center</a>
+                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarsExample05" aria-controls="navbarsExample05" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse navbar-light" id="navbarsExample05">
+                    <ul class="navbar-nav mx-auto">
+                        <li class="nav-item">
+                            <a class="nav-link" href="@Url.Action("Index", "Home")"></a>
+                        </li>
+                        @if (Request.IsAuthenticated && User.IsInRole("Employee") | User.IsInRole("Manager") | User.IsInRole("Admin"))
+                        {
+                            <li class="nav-item dropdown">
+                                <a class="nav-link dropdown-toggle" href="@Url.Action("Index", "Courses")" id="dropdown04" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Courses</a>
+                                <div class="dropdown-menu" aria-labelledby="dropdown04">
+                                    <a class="dropdown-item" href="@Url.Action("Index", "Courses")">All Courses</a>
+                                    <a class="dropdown-item" href="@Url.Action("CourseLessons", "Lessons", new { id = "220" })">Medication Safety &amp; Administration</a>
+                                    <a class="dropdown-item" href="@Url.Action("CourseLessons", "Lessons", new { id = "180" })">Patient Safety</a>
+                                    <a class="dropdown-item" href="@Url.Action("CourseLessons", "Lessons", new { id = "790" })">Cardiac</a>
+                                    <a class="dropdown-item" href="@Url.Action("CourseLessons", "Lessons", new { id = "802" })">Psych</a>
+                                    <a class="dropdown-item" href="@Url.Action("CourseLessons", "Lessons", new { id = "880" })">Critical Care</a>
+                                    <a class="dropdown-item" href="@Url.Action("CourseLessons", "Lessons", new { id = "990" })">Neuro</a>
+                                </div>
+                            </li>
+                        }
+
+                        @if (Request.IsAuthenticated && User.IsInRole("Employee") | User.IsInRole("Manager"))
+                        {
+                            <li class="nav-item dropdown">
+                                <a class="nav-link dropdown-toggle" href="#" id="dropdown05" data-toggle="dropdown" aria-haspopup="true"
+                                   aria-expanded="false" style="padding-left:10px">Learning Profile</a>
+                                <div class="dropdown-menu" aria-labelledby="dropdown05">
+                                    <a class="dropdown-item" href="@Url.Action("Index", "CourseCompletions")">Completed Courses</a>
+                                    <a class="dropdown-item" href="@Url.Action("Index", "LessonViews")">Lessons Completed</a>
+                                </div>
+                            </li>
+                        }
+                        @if (Request.IsAuthenticated && User.IsInRole("Admin"))
+                        {
+                            <li class="nav-item">
+                                <a class="nav-link" href="@Url.Action("Index", "Lessons")">Lessons</a>
+                            </li>
+                        }
+
+                        @if (Request.IsAuthenticated && User.IsInRole("Admin"))
+                        {
+                            @*<li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" href="#" id="dropdown05" data-toggle="dropdown" aria-haspopup="true"
+               aria-expanded="false">Admin</a>
+            <div class="dropdown-menu" aria-labelledby="dropdown05">*@
+                            <li class="nav-item dropdown" style="padding-left:10px">
+                                <a class="nav-link dropdown-toggle" href="#" id="dropdown06" data-toggle="dropdown" aria-haspopup="true"
+                                   aria-expanded="false">Admin</a>
+                                <div class="dropdown-menu" aria-labelledby="dropdown06">
+                                    <a class="dropdown-item" href="@Url.Action("Index", "RolesAdmin")">Role Admin</a>
+                                    <a class="dropdown-item" href="@Url.Action("Index", "UsersAdmin")">User Admin</a>
+                                </div>
+                            </li>
+                        }
+                    </ul>
+                    <ul class="navbar-nav absolute-right">
+                        <li class="nav-item login-partial">
+                            @Html.Partial("_LoginPartial", new { @class = "nav-link" })
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+    </header>
+    <section class="site-hero site-hero-innerpage overlay" data-stellar-background-ratio="0.5" style="background-image: url(/Content/images/HeaderBackground2.jpg);">
+        <div class="container">
+            <div class="row align-items-center site-hero-inner justify-content-center">
+                <div class="col-md-8 text-center">
+                    <div class="mb-5 element-animate">
+                        <h1>@ViewBag.Title</h1>
+                        @RenderSection("html", required: false)
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    @RenderBody()
+
+    <footer class="site-footer" style="background-image: url(/Content/images/imageedit_3_9838745579[35].jpg);">
+        <div class="container">
+            <div class="row mb-5">
+                <div class="col-md-4">
+                    <h3>About</h3>
+                    <p>Edgewater Medical Center is a leader in providing patients with compassionate, state-of-the-art care, offering a range of general and specialized medical and nursing services. We have over 1,000 physicians, surgeons and nurses at our main medical center and ambulatory care centers throughout the Chicago area. Our knowledge of innovative treatments is enhanced by our dedication to maintaining the highest standard of care.</p>
+                </div>
+                <div class="col-md-6 ml-auto">
+                    <div class="row">
+                        <div class="col-md-4">
+                            <ul class="list-unstyled">
+                                <li>  <a class="nav-link" href="@Url.Action("Index", "Home")"></a></li>
+                                <li>  <a class="nav-link" href="@Url.Action("Index", "Courses")">Courses</a></li>
+                                <li>  <a class="nav-link" href="@Url.Action("Register", "Account")">Register</a></li>
+                                <li>  <a class="nav-link" href="@Url.Action("Login", "Account")">Log In</a></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-12">
+                    <p>
+                        <!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
+                        Copyright &copy;
+                        <script>document.write(new Date().getFullYear());</script> All rights reserved | Kristin Cartmill | This template is made with <i class="fa fa-heart-o" aria-hidden="true"></i> by <a href="https://colorlib.com" target="_blank">Colorlib</a>
+                        <!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
+                    </p>
+                </div>
+            </div>
+        </div>
+    </footer>
+    <!-- END footer -->
+    <!-- loader -->
+    <div id="loader" class="show fullscreen"><svg class="circular" width="48px" height="48px"><circle class="path-bg" cx="24" cy="24" r="22" fill="none" stroke-width="4" stroke="#eeeeee" /><circle class="path" cx="24" cy="24" r="22" fill="none" stroke-width="4" stroke-miterlimit="10" stroke="#f4b214" /></svg></div>
+    <script src="~/Content/js/jquery-3.2.1.min.js"></script>
+    <script src="~/Content/js/jquery-migrate-3.0.0.js"></script>
+    <script src="~/Content/js/popper.min.js"></script>
+    <script src="~/Content/js/bootstrap.min.js"></script>
+    <script src="~/Content/js/owl.carousel.min.js"></script>
+    <script src="~/Content/js/jquery.waypoints.min.js"></script>
+    <script src="~/Content/js/jquery.stellar.min.js"></script>
+
+    <script src="~/Content/js/main.js"></script>
+    @RenderSection("Scripts", false)
+</body>
+</html>

@@ -1,0 +1,47 @@
+﻿@model IEnumerable<FinalProject.DATA.EF.Course>
+
+@{ 
+    ViewBag.Title = "Courses";
+}
+
+<!-- END section -->
+
+<section class="site-section bg-light">
+    <div class="container">
+        @if (Request.IsAuthenticated && User.IsInRole("Admin"))
+        {
+            <p>
+                @Html.ActionLink("Create New", "Create")
+            </p>
+        }
+         
+            <div class="row box-wrap">
+                @foreach (var item in Model)
+                {
+                    <div class="col-md-4 col-sm-6 col-12 box">                     
+                        <p class="name-heading">@Html.DisplayFor(modelItem => item.CourseName)</p>
+                        <a href="@Url.Action("CourseLessons", "Lessons", new { id = item.CourseId })" class="course">
+                            <p> View Lessons</p>
+                        </a>
+                        <p>
+                            @Html.DisplayFor(modelItem => item.CourseDescription)
+                        </p>
+                        @*Html.DisplayNameFor(model => model.IsActive)
+                        @Html.DisplayFor(modelItem => item.IsActive)*@
+                        <p class="crud-function">
+                            @if (Request.IsAuthenticated && User.IsInRole("Admin"))
+                            {
+                                @Html.ActionLink("Edit", "Edit", new { id = item.CourseId }) 
+
+                                @Html.ActionLink("Delete", "Delete", new { id = item.CourseId }) 
+
+                                @Html.ActionLink("Details", "Details", new { id = item.CourseId })
+                            }
+
+                        </p>
+                    </div>
+                }
+            </div>
+        </div>
+</section>
+   

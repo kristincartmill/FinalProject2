@@ -1,0 +1,35 @@
+﻿@using Microsoft.AspNet.Identity
+@using FinalProject.DATA.EF
+@if (Request.IsAuthenticated) {
+
+    LMSEntities db = new LMSEntities();
+    string userID = User.Identity.GetUserId(); //this gets the user id of the person logged in from
+                                               //the AspNetUsers table
+    UserDetail currentUser = db.UserDetails.Where(ud => ud.UserId == userID).FirstOrDefault();
+    string userFN = "Guest"; //defaulting to some value in case there is no match on the UserDetails table
+ 
+
+    //if we DID get a match on UserDetail, use it to populate those vars (aka variables) above
+    if (currentUser != null)
+    {
+        userFN = currentUser.FirstName;
+    }
+
+
+    using (Html.BeginForm("LogOff", "Account", FormMethod.Post, new { id = "logoutForm", @class = "navbar-right" })) {
+        @Html.AntiForgeryToken()
+
+        <ul class="nav navbar-nav navbar-right">
+            <li>
+                @Html.ActionLink("Hello " + userFN + "!", "Index", "Manage", routeValues: null, htmlAttributes: new { title = "Manage" , @class = "nav-link"  })
+            </li>
+            <li><a href="javascript:document.getElementById('logoutForm').submit()">Log off</a></li>
+        </ul>
+    }
+}
+else {
+    <ul class="nav navbar-nav navbar-right">
+        <li>@Html.ActionLink("Register", "Register", "Account", routeValues: null, htmlAttributes: new { @class = "nav-link" @*id = "registerLink"*@ })</li>
+        <li>@Html.ActionLink("Log in", "Login", "Account", routeValues: null, htmlAttributes: new { @class="nav-link"@*id = "loginLink"*@ })</li>
+    </ul>
+}

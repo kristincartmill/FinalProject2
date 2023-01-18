@@ -1,0 +1,75 @@
+﻿@model IEnumerable<FinalProject.DATA.EF.LessonView>
+
+@{
+    ViewBag.Title = "Lessons Completed";
+}
+
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+
+@section htmlHead{
+    <link type="text/css" rel="stylesheet" href="//cdn.datatables.net/1.10.20/css/jquery.dataTables.min.css" />
+}
+
+<table class="table data-table table-striped">
+    <thead>
+        <tr>
+            <th>
+                Date Completed
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Lesson.LessonTitle)
+            </th>
+            <th>
+                First Name
+            </th>
+            <th>
+                Last Name
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.DateViewed)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Lesson.LessonTitle)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.UserDetail.FirstName)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.UserDetail.LastName)
+                </td>
+                <td>
+                    @Html.ActionLink("Details", "Details", new { id = item.LessonViewId })
+                    @if (Request.IsAuthenticated && User.IsInRole("Admin"))
+                    {
+                        @Html.ActionLink("Edit", "Edit", new { id = item.LessonViewId })
+
+                        @Html.ActionLink("Delete", "Delete", new { id = item.LessonViewId })
+                    }
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+@section scripts{
+    <script src="//cdn.datatables.net/1.10.20/js/jquery.dataTables.min.js"></script>
+
+    @* This code will apply the jQuery Data Tables plugin to the table above     *@
+    <script>
+        $(document).ready(function () {
+            $(".data-table").DataTable();
+        });
+    </script>
+
+}

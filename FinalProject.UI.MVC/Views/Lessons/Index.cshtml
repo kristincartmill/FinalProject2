@@ -1,0 +1,77 @@
+﻿@model IEnumerable<FinalProject.DATA.EF.Lesson>
+
+
+@{
+    ViewBag.Title = "Lessons";
+ }
+
+
+
+<!-- END section -->
+
+<section class="site-section bg-light">
+    <div class="container">
+
+        @if (Request.IsAuthenticated && User.IsInRole("Admin"))
+        {
+            <p>
+                @Html.ActionLink("Create New", "Create")
+            </p>
+        }
+
+            @*<tr>
+                <th>
+                    @Html.DisplayNameFor(model => model.LessonTitle)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Introduction)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.VideoURL)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.IsActive)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Cours.CourseName)
+                </th>
+                <th></th>
+            </tr>*@
+
+
+            <div class="row box-wrap" @*style="padding:2em; justify-content:center"*@>
+
+                @foreach (var item in Model)
+                {
+                <div class="col-md-4 col-sm-6 col-12 box" @*style="border:1px solid black; box-sizing:border-box; display: grid; grid-gap: 10px; margin:1em;"*@>
+
+
+                    <p class="name-heading">
+                        @Html.DisplayFor(modelItem => item.LessonTitle)
+                    </p>
+
+                    @*@Html.DisplayFor(modelItem => item.Introduction)*@
+
+                    @*@Html.DisplayFor(modelItem => item.VideoURL)*@
+
+                    @*@Html.DisplayFor(modelItem => item.IsActive)*@
+
+                    @Html.DisplayFor(modelItem => item.Cours.CourseName)
+
+                    <p class="crud-function">
+                        @if (Request.IsAuthenticated && User.IsInRole("Admin"))
+                        {
+                            @Html.ActionLink("Edit", "Edit", new { id = item.LessonId })
+
+                            @Html.ActionLink("Delete", "Delete", new { id = item.LessonId })
+
+                            @Html.ActionLink("Details", "Details", new { id = item.LessonId })
+                        }
+
+                    </p>
+                </div>
+                }
+
+            </div>
+        </div>
+</section>
